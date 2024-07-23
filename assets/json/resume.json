@@ -1,36 +1,70 @@
 {
   "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
+    "name": "Siqi Zheng",
+    "label": "Data Scientist & Software Developer",
     "image": "",
-    "email": "albert@einstein.de",
-    "phone": "(912) 123-4567",
-    "url": "https://alshedivat.github.io/al-folio/",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
+    "email": "timothyzheng2000@gmail.com",
+    "phone": "",
+    "url": "https://siqi-zheng.github.io",
+    "summary": "",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
-      "countryCode": "US",
-      "region": "California"
+      "address": "130 St George St",
+      "postalCode": "CA M5S 1A5",
+      "city": "Toronto",
+      "countryCode": "CA",
+      "region": "Ontario"
     },
     "profiles": [
       {
         "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "username": "SiqiiiTim",
+        "url": "https://x.com/SiqiiiTim"
       }
     ]
   },
   "work": [
     {
-      "name": "Institute for Advanced Study, Princeton University",
-      "position": "Professor of Theoretical Physics",
-      "url": "https://example.com",
-      "startDate": "1933-01-01",
-      "endDate": "1955-01-01",
-      "summary": "Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.",
-      "highlights": ["Relativity"]
+      "name": "University of Toronto",
+      "position": "Software Developer",
+      "url": "",
+      "startDate": "2024-01-01",
+      "endDate": "Present",
+      "summary": "Develop and maintain an open-source R package for grading programming assignments with an existing automatic testing framework `testthat`.",
+      "highlights": [
+        "Develop and maintain an open-source R package solution for grading programming assignments with an existing automatic testing framework, ensuring scalability and reliability for over 1,500 users in the university.",
+        "Optimize and refactor the codebase for conciseness and readability, enhancing performance and maintainability.",
+        "Implement user-friendly features and automate software documentation to improve transparency, reducing the learning cost for non-technical users from weeks to 2 days, resulting in higher user satisfaction and faster adoption.",
+        "Leverage CI/CD practices with version control for continuous and collaborative development with professors."
+      ]
+    },
+    {
+      "name": "University of Toronto",
+      "position": "Business Analyst and Client Support (REDCap & JupyterHub)",
+      "url": "https://act.utoronto.ca/",
+      "startDate": "2022-04-01",
+      "endDate": "Present",
+      "summary": "Support the deployment of AI copilot studio chatbots for the university.",
+      "highlights": [
+        "Manage a survey platform with 2K+ users, perform regular updates and functional tests to ensure smooth operation.",
+        "Analyze REDCap/JupyterHub usage data with Tableau, SQL, Python/R, identify key trends and business insights.",
+        "Solved over 500 incidents for over 50 departments at UofT by email support, online office hours and workshops.",
+        "Designed and implemented a secure and efficient online form with user authentication, automating over 1K REDCap requests every year, resulting in significant time and workload reduction as well as storage space savings.",
+        "Recognized with the VPOREP Impact Award for launching a collaborative service successfully."
+      ]
+    },
+    {
+      "name": "University of Toronto",
+      "position": "Teaching Assistant",
+      "url": "",
+      "startDate": "2020-09-01",
+      "endDate": "2022-04-01",
+      "summary": "TA for an undergraduate R & statistics course (class size: 500) for 5 terms, 1-1 weekly tutorial for more than 120 students as a TA.",
+      "highlights": [
+        "TA for an undergraduate Statistical Reasoning and Data Science course of (class size: 500) for 4 terms.",
+        "Led a 1-hour tutorial for 24 students weekly: taught R and statistical modeling; evaluated students' assignments.",
+        "Hosted office hours (2 hours/week) and monitored online discussion forum for all students on a weekly basis.",
+        "Students who participated consistently in my tutorial received A or above and entered the program of study."
+      ]
     }
   ],
   "volunteer": [
@@ -151,7 +185,12 @@
   ],
   "languages": [
     {
-      "language": "German",
+      "language": "Mandarin",
+      "fluency": "Native speaker",
+      "icon": ""
+    },
+    {
+      "language": "Cantonese",
       "fluency": "Native speaker",
       "icon": ""
     },
