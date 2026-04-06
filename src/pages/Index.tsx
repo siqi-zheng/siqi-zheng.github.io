@@ -116,8 +116,8 @@ function Nav() {
       }`}
     >
       <div className="max-w-4xl mx-auto px-6 flex items-center justify-between h-14">
-        <a href="#" className="font-semibold tracking-tight text-foreground text-lg" style={{ fontFamily: "var(--font-serif)" }}>
-          S. Zheng
+        <a href="#" className="text-[2rem] md:text-[2rem] lg:text-[2rem] font-semibold tracking-tight text-foreground text-lg" style={{ fontFamily: "var(--font-serif)" }}>
+          Siqi Zheng
         </a>
         <ul className="hidden md:flex gap-6 text-sm">
           {NAV_ITEMS.map((n) => (
@@ -273,18 +273,16 @@ function Hero() {
           {/* Right Column: Industrial-Oriented Academic Text & Action Buttons */}
           <div className="text-center md:text-left">
             <RevealSection delay={100}>
-              <h1 className="text-[2.8rem] md:text-[3.5rem] lg:text-[4.2rem] font-extrabold tracking-tight leading-[1.05] text-[#021A40] mb-6">
-                Building Scalable<br />
-                AI Systems &<br />
-                <span className="text-[#3061A3] italic">Probabilistic Models</span>
+              <h1 className="text-[2.8rem] md:text-[3.5rem] lg:text-[4.2rem] font-semibold tracking-tight leading-[1.05] text-[#021A40] mb-6">
+                Bayesian Inference &<br />
+                <span className="text-[#3061A3] italic">Scientific Computing</span>
               </h1>
             </RevealSection>
 
             <RevealSection delay={200}>
               <p className="mt-3 text-lg md:text-xl text-gray-700 leading-relaxed mb-8 max-w-lg mx-auto md:mx-0">
-                I am a PhD student at NUS bridging rigorous Bayesian statistics with production-level software engineering. Drawing from my experience managing computing platforms for 10,000+ users and deploying optimized Generative AI applications at the University of Toronto, I engineer robust pipelines to turn complex data into actionable, real-world solutions.
-              </p>
-            </RevealSection>
+I am a PhD student at NUS specializing in simulation-based Bayesian inference. My work bridges rigorous mathematical research with scalable production engineering. Whether I am optimizing advanced statistical pipelines, building enterprise research infrastructure, or developing AI-driven educational tools, I focus on translating complex statistical theory into high-impact, user-facing systems.                </p>          
+                </RevealSection>
 
             <RevealSection delay={300}>
               <div className="mt-6 flex flex-wrap items-center gap-4 justify-center md:justify-start">
@@ -370,7 +368,7 @@ function About() {
   return (
     <Section id="about" title="About">
       <RevealSection>
-        <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-prose text-pretty">
+        <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-prose text-justify hyphens-auto">
           I am a first-year PhD student at the National University of Singapore, supervised by{" "}
           <a href="https://iora.nus.edu.sg/people-p/david-nott/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
             Prof. David Nott
@@ -382,14 +380,14 @@ function About() {
         </p>
       </RevealSection>
       <RevealSection delay={100}>
-        <p className="mt-4 text-base md:text-lg leading-relaxed text-muted-foreground max-w-prose text-pretty">
-          At the University of Toronto, I served as a business analyst at{" "}
+        <p className="mt-4 text-base md:text-lg leading-relaxed text-muted-foreground max-w-prose text-justify hyphens-auto">
+My core research focuses on simulation-based Bayesian inference, where I optimize production-ready pipelines for the Bayesian Relative Belief Framework. <strong>My passion for statistical education spans from mentoring as an undergraduate TA to delivering core theory lectures as a Sessional Instructor at the University of Toronto.</strong> Dedicated to empowering students at scale, I designed an <a href="https://github.com/RAutoGrading/RMarkUs" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">R package</a> that automates grading for <strong>2K+ students</strong> and led an AI Virtual Tutors pilot deploying GenAI chatbots across 6 university courses. To further support the scientific community, I drove <strong>60% YoY user growth</strong> across enterprise computing platforms—including <a href="https://datatools.utoronto.ca/" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub and REDCap</a>—serving <strong>1.7K+ active users</strong> at the university.          {/* At the University of Toronto, I served as a business analyst at{" "}
           <a href="https://act.utoronto.ca/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">ARC</a>,
           administering JupyterHub and REDCap. I led a group at{" "}
           <a href="https://www.statistics.utoronto.ca/past-datafest-at-UofT#past-datafest-accordion-3" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
             DataFest@UofT 2022
           </a>{" "}
-          and won the <em>Best Statistical Analysis Award</em>.
+          and won the <em>Best Statistical Analysis Award</em>. */}
         </p>
       </RevealSection>
       <RevealSection delay={200}>
