@@ -273,16 +273,27 @@ function Hero() {
           {/* Right Column: Industrial-Oriented Academic Text & Action Buttons */}
           <div className="text-center md:text-left">
             <RevealSection delay={100}>
-              <h1 className="text-[2.8rem] md:text-[3.5rem] lg:text-[4.2rem] font-semibold tracking-tight leading-[1.05] text-[#021A40] mb-6">
-                Bayesian Inference &<br />
-                <span className="text-[#3061A3] italic">Scientific Computing</span>
-              </h1>
+              <h1 
+              className="font-['Cormorant Garamond'] text-[2.8rem] md:text-[3.5rem] 
+              lg:text-[4.2rem] font-semibold tracking-tight leading-[1.05] text-[#021A40] mb-6"
+              style={{ fontFamily: 'var(--font-cg), serif' }}>
+              Scalable ML Systems &<br />
+              <span className="text-[#3061A3] italic">Math-Driven Computing</span>
+            </h1>
             </RevealSection>
 
             <RevealSection delay={200}>
-              <p className="mt-3 text-lg md:text-xl text-gray-700 leading-relaxed mb-8 max-w-lg mx-auto md:mx-0">
-I am a PhD student at NUS specializing in simulation-based Bayesian inference. My work bridges rigorous mathematical research with scalable production engineering. Whether I am optimizing advanced statistical pipelines, building enterprise research infrastructure, or developing AI-driven educational tools, I focus on translating complex statistical theory into high-impact, user-facing systems.                </p>          
-                </RevealSection>
+              <p className="mt-3 text-lg md:text-xl text-gray-700 leading-relaxed mb-8 max-w-lg mx-auto md:mx-0 text-justify hyphens-auto">
+              I am a PhD Researcher at NUS. 
+              My work centers on architecting <strong>production-grade, container-ready</strong> pipelines 
+              for decision-making framework under uncertainty. 
+              Beyond research, I am a dedicated advocate for <em>Open Science</em>, 
+              having developed open-source software integrated into international university curricula 
+              and managed university-wide computing platforms. My goal is to ensure that advanced ML systems 
+              remain <strong>transparent, scalable, and mathematically rigorous</strong>.
+       
+              </p>       
+              </RevealSection>
 
             <RevealSection delay={300}>
               <div className="mt-6 flex flex-wrap items-center gap-4 justify-center md:justify-start">
