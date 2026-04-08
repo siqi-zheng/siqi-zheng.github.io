@@ -46,8 +46,9 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
 
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-serif: 'Source Serif 4', Georgia, serif;
     --font-sans: 'DM Sans', system-ui, sans-serif;
+    --font-cg: 'Cormorant Garamond';
   }
 }
 
