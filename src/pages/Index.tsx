@@ -54,7 +54,16 @@ const EXPERIENCES = [
 const PROJECTS = [
   {
     title: "RMarkUs",
-    description: "Open-source R package built on testthat for automated grading of R assignments, used across 5 courses with up to 500 students per class.",
+    description: (
+      <>
+        Developed an open-source automated grading R package to evaluate complex technical assignments, including Statistical Models and Visualizations. Used by five undergraduate courses (300 students/class) during the past three years at UofT, eliminating over{" "}
+        <TooltipText 
+          text={<strong>750 hours</strong>}  
+          tooltip={"300 students × 5 courses × 10 assignments × ~15 mins manual grading time - 5 courses × 10 assignments × 60 minutes testing & deployment = ~750 hours saved per year."} 
+        />{" "}
+        of manual grading time per year.
+      </>
+    ),
     link: "https://github.com/RAutoGrading/RMarkUs",
     tags: ["R", "Open Source", "Education"],
   },
@@ -62,6 +71,18 @@ const PROJECTS = [
     title: "AI Virtual Tutors Pilot",
     description: "Led the deployment of Generative AI chatbots across 6 university courses (60–200 students each), exploring AI-assisted learning at scale.",
     tags: ["Generative AI", "EdTech", "Leadership"],
+  },
+  {
+    title: "Scientific Computational Systems Management",
+    description: (
+      <>
+       Managed two platforms at UofT, <a href="/blog/scaling-jupyterhub-university-60-yoy" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub</a> and 
+       <a href="/blog/strategic-redcap-management-university" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">REDCap</a>, a 
+       on-premise survey collection tool for researchers. Drove <strong>60% YoY user growth</strong> across enterprise computing platforms—<strong>17K+ active users</strong> at the university. 
+      </>
+    ),
+    link: "https://datatools.utoronto.ca",
+    tags: ["R", "Python", "Education"],
   },
 ];
 
@@ -277,7 +298,7 @@ function Hero() {
               className="font-['Cormorant Garamond'] text-[2.8rem] md:text-[3.5rem] 
               lg:text-[4.2rem] font-semibold tracking-tight leading-[1.05] text-[#021A40] mb-6"
               style={{ fontFamily: 'var(--font-cg), serif' }}>
-              Scalable ML Systems &<br />
+              Scalable MLOps &<br />
               <span className="text-[#3061A3] italic">Math-Driven Computing</span>
             </h1>
             </RevealSection>
@@ -289,7 +310,7 @@ function Hero() {
               for decision-making framework under uncertainty. 
               Beyond research, I am a dedicated advocate for <em>Open Science</em>, 
               having developed open-source software integrated into international university curricula 
-              and managed university-wide computing platforms. My goal is to ensure that advanced ML systems 
+              and scaled university-wide computing infrastructure to support 10K+ users. My goal is to ensure that advanced ML systems 
               remain <strong>transparent, scalable, and mathematically rigorous</strong>.
        
               </p>       
@@ -392,7 +413,15 @@ function About() {
       </RevealSection>
       <RevealSection delay={100}>
         <p className="mt-4 text-base md:text-lg leading-relaxed text-muted-foreground max-w-prose text-justify hyphens-auto">
-My core research focuses on simulation-based Bayesian inference, where I optimize production-ready pipelines for the Bayesian Relative Belief Framework. <strong>My passion for statistical education spans from mentoring as an undergraduate TA to delivering core theory lectures as a Sessional Instructor at the University of Toronto.</strong> Dedicated to empowering students at scale, I designed an <a href="https://github.com/RAutoGrading/RMarkUs" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">R package</a> that automates grading for <strong>2K+ students</strong> and led an AI Virtual Tutors pilot deploying GenAI chatbots across 6 university courses. To further support the scientific community, I drove <strong>60% YoY user growth</strong> across enterprise computing platforms—including <a href="https://datatools.utoronto.ca/" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub and REDCap</a>—serving <strong>1.7K+ active users</strong> at the university.          {/* At the University of Toronto, I served as a business analyst at{" "}
+My core research focuses on simulation-based Bayesian inference, where I optimize production-ready pipelines for the Bayesian Relative Belief Framework. <strong>My passion for statistical education spans 
+  from mentoring as an undergraduate TA to delivering core theory lectures as a Sessional Instructor 
+  at the University of Toronto.</strong> Dedicated to empowering students at scale, 
+  I designed an <a href="https://github.com/RAutoGrading/RMarkUs" rel="noopener noreferrer" 
+  className="text-primary hover:underline underline-offset-4">R package</a> that 
+  automates grading for <strong>2K+ students</strong> and led an AI Virtual Tutors 
+  pilot deploying GenAI chatbots across 6 university courses. To further support the 
+  scientific community, I drove <strong>60% YoY user growth</strong> across enterprise 
+  computing platforms—including <a href="https://datatools.utoronto.ca/" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub and REDCap</a>—serving <strong>1.7K+ active users</strong> at the university.          {/* At the University of Toronto, I served as a business analyst at{" "}
           <a href="https://act.utoronto.ca/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">ARC</a>,
           administering JupyterHub and REDCap. I led a group at{" "}
           <a href="https://www.statistics.utoronto.ca/past-datafest-at-UofT#past-datafest-accordion-3" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
@@ -460,22 +489,58 @@ function ExperienceSection() {
   );
 }
 
-function ProjectsSection() {
+
+
+// 1. A simple custom tooltip component using Tailwind
+function TooltipText({ text, tooltip }) {
+  return (
+    <span className="group relative inline-block border-b border-dashed border-muted-foreground/50 cursor-help">
+      {text}
+      {/* Tooltip Card */}
+      <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 p-2 text-xs text-left bg-popover text-popover-foreground rounded-md shadow-md border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+        {tooltip}
+        {/* Tooltip Arrow */}
+        <span className="absolute top-full left-1/2 -translate-x-1/2 border-[5px] border-transparent border-t-border"></span>
+        <span className="absolute top-[calc(100%-1px)] left-1/2 -translate-x-1/2 border-[5px] border-transparent border-t-popover"></span>
+      </span>
+    </span>
+  );
+}
+
+export function ProjectsSection() {
   return (
     <Section id="projects" title="Projects" className="bg-card">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {PROJECTS.map((proj, i) => (
           <RevealSection key={proj.title} delay={i * 100}>
             <div className="p-6 rounded-xl bg-background border border-border shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-              <h3 className="text-lg font-semibold text-foreground" style={{ fontFamily: "var(--font-serif)" }}>{proj.title}</h3>
-              <p className="text-sm text-muted-foreground mt-2 leading-relaxed flex-1 text-pretty">{proj.description}</p>
+              <h3 
+                className="text-lg font-semibold text-foreground" 
+                style={{ fontFamily: "var(--font-serif)" }}
+              >
+                {proj.title}
+              </h3>
+              
+              {/* 2. Render description natively so our React Component works */}
+              <p className="text-sm text-muted-foreground mt-2 leading-relaxed flex-1 text-pretty">
+                {proj.description}
+              </p>
+
               <div className="mt-4 flex flex-wrap gap-2">
                 {proj.tags.map((tag) => (
-                  <span key={tag} className="text-xs px-2 py-1 rounded-md bg-secondary text-muted-foreground">{tag}</span>
+                  <span key={tag} className="text-xs px-2 py-1 rounded-md bg-secondary text-muted-foreground">
+                    {tag}
+                  </span>
                 ))}
               </div>
+              
               {proj.link && (
-                <a href={proj.link} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4">
+                <a 
+                  href={proj.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4"
+                >
                   View on GitHub <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               )}
@@ -486,6 +551,8 @@ function ProjectsSection() {
     </Section>
   );
 }
+
+
 
 function PublicationsSection() {
   return (
