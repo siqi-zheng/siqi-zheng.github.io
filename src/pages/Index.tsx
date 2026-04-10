@@ -76,8 +76,7 @@ const PROJECTS = [
     title: "Scientific Computational Systems Management",
     description: (
       <>
-       Managed two platforms at UofT, <a href="/blog/scaling-jupyterhub-university-60-yoy" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub</a> and 
-       <a href="/blog/strategic-redcap-management-university" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">REDCap</a>, a 
+       Managed two platforms at UofT, <a href="/blog/scaling-jupyterhub-university-60-yoy" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub</a> and <a href="/blog/strategic-redcap-management-university" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">REDCap</a>, a 
        on-premise survey collection tool for researchers. Drove <strong>60% YoY user growth</strong> across enterprise computing platforms—<strong>17K+ active users</strong> at the university. 
       </>
     ),
