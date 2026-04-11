@@ -64,10 +64,6 @@ function renderMarkdown(md: string) {
     if (last < text.length) parts.push(formatInline(text.slice(last)));
     return parts.length === 1 ? parts[0] : <>{parts}</>;
   };
-    
-    if (last < text.length) parts.push(formatInline(text.slice(last)));
-    return parts.length === 1 ? parts[0] : <>{parts}</>;
-  };
 
   const formatInline = (text: string): React.ReactNode => {
     return text
