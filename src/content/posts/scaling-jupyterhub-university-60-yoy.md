@@ -26,7 +26,7 @@ When things break, users need a lifeline. Before our upgrades, users encounterin
 ### Predictive Maintenance and Updates
 A major roadblock we faced was outdated R and Python kernels, which caused many modern packages and libraries to fail. However, updating a massive live system is risky. To solve this, we used **time-series Prophet models** to analyze usage logs, identifying distinct weekly traffic patterns and off-peak academic seasons. By predicting exactly when system usage would hit rock bottom, we confidently scheduled our kernel updates during these windows, keeping the system up-to-date year-round with zero disruption to end-users.
 
-![Off-peak academic seasons are clearly shown and we selected the week where user activity is at its historical lowest.](/blog-images/jupyterhub_weekly.png "Time-series Data for Weekly Usage")
+![Activity drops during off-peak academic seasons, allowing us to pinpoint the week with the lowest historical user engagement.](/blog-images/jupyterhub_weekly.png "Time-series Data for Weekly Usage")
 
 ### Automating Resource Cleanup
 Scaling user growth also means you have to aggressively scale your cleanup efforts. To keep the system performant and secure, we implemented **automated user offboarding**. The system now automatically revokes access and reclaims server resources the moment a student or researcher leaves the university. This simple automation prevents resource bloat, saves money, and ensures our infrastructure scales efficiently for active users.
