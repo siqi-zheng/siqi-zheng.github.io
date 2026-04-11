@@ -6,7 +6,6 @@ import "katex/dist/katex.min.css"; // CRITICAL: Math will not display correctly 
 import { useEffect } from "react";
 
 function renderMarkdown(md: string) {
-  // Minimal markdown-to-JSX for headings, bold, italic, links, blockquotes, lists, code, and math
   const lines = md.trim().split("\n");
   const elements: React.ReactNode[] = [];
   let i = 0;
@@ -22,27 +21,22 @@ function renderMarkdown(md: string) {
       if (m.index > last) parts.push(formatInline(text.slice(last, m.index)));
       
       const isImage = m[1] === "!";
-      const textOrAlt = m[2]; // Your long description
+      const textOrAlt = m[2];
       const url = m[3];
-      const title = m[4];     // "Change in Active Users by Terms"
+      const title = m[4];
 
       if (isImage) {
+        // Fallback for inline images (if an image shares a line with text)
+        // Kept as <img> so it doesn't break paragraph layouts
         parts.push(
-          <figure key={m.index} className="my-8 flex flex-col items-center">
-            <img 
-              src={url} 
-              alt={textOrAlt} 
-              title={title}
-              className="rounded-lg max-w-full h-auto object-cover" 
-              loading="lazy"
-            />
-            {/* This makes the alt text visible as a caption below the image */}
-            {textOrAlt && (
-              <figcaption className="mt-3 text-sm text-muted-foreground text-center text-balance italic">
-                {textOrAlt}
-              </figcaption>
-            )}
-          </figure>
+          <img 
+            key={m.index} 
+            src={url} 
+            alt={textOrAlt} 
+            title={title}
+            className="inline-block rounded-lg max-w-full h-auto object-cover my-2 align-middle" 
+            loading="lazy"
+          />
         );
       } else {
         parts.push(
@@ -67,7 +61,6 @@ function renderMarkdown(md: string) {
 
   const formatInline = (text: string): React.ReactNode => {
     return text
-      // Added support for $inline math$ parsing
       .split(/(\*\*[^*]+\*\*|\*[^*]+\*|\$[^$]+\$)/)
       .map((seg, idx) => {
         if (seg.startsWith("**") && seg.endsWith("**"))
@@ -75,7 +68,6 @@ function renderMarkdown(md: string) {
         if (seg.startsWith("*") && seg.endsWith("*"))
           return <em key={idx}>{seg.slice(1, -1)}</em>;
         if (seg.startsWith("$") && seg.endsWith("$")) {
-          // Render inline KaTeX
           try {
             const html = katex.renderToString(seg.slice(1, -1), { displayMode: false, throwOnError: false });
             return <span key={idx} dangerouslySetInnerHTML={{ __html: html }} />;
@@ -91,6 +83,37 @@ function renderMarkdown(md: string) {
     const line = lines[i];
 
     if (line.trim() === "") { i++; continue; }
+
+    // NEW: Handle block-level images (image on its own line)
+    const blockImgMatch = line.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)$/);
+    if (blockImgMatch) {
+      const textOrAlt = blockImgMatch[1];
+      const url = blockImgMatch[2];
+      const title = blockImgMatch[3];
+      
+      // Use the Title for the caption if it exists. 
+      // If no title, use alt text (ignoring if they literally typed "alt")
+      const caption = textOrAlt
+
+      elements.push(
+        <figure key={i} className="my-8 flex flex-col items-center">
+          <img 
+            src={url} 
+            alt={textOrAlt} 
+            title={title}
+            className="rounded-lg max-w-full h-auto object-cover" 
+            loading="lazy"
+          />
+          {caption && (
+            <figcaption className="mt-3 text-sm text-muted-foreground text-center text-balance italic">
+              {caption}
+            </figcaption>
+          )}
+        </figure>
+      );
+      i++;
+      continue;
+    }
 
     if (line.startsWith("## ")) {
       elements.push(<h2 key={i} className="text-2xl font-semibold text-foreground mt-10 mb-4" style={{ fontFamily: "var(--font-serif)" }}>{line.slice(3)}</h2>);
@@ -127,14 +150,10 @@ function renderMarkdown(md: string) {
       );
       continue;
     } else if (line.trim().startsWith("$$")) {
-      // Handle block math (both single-line and multi-line)
       let mathExpr = line.trim().replace(/^\$\$/, "");
-      
-      // If it's a single line like: $$ equation $$
       if (mathExpr.endsWith("$$") && line.trim() !== "$$") {
         mathExpr = mathExpr.replace(/\$\$$/, "");
       } else {
-        // Collect multi-line equations
         i++;
         while (i < lines.length && !lines[i].trim().includes("$$")) {
           mathExpr += "\n" + lines[i];
@@ -151,7 +170,6 @@ function renderMarkdown(md: string) {
           <div key={i} className="my-6 overflow-x-auto text-foreground flex justify-center" dangerouslySetInnerHTML={{ __html: html }} />
         );
       } catch (err) {
-        // Fallback to raw text if KaTeX fails to parse
         elements.push(
           <pre key={i} className="my-4 p-4 bg-red-950/20 text-red-500 rounded-lg text-sm overflow-x-auto font-mono">
             {mathExpr}
