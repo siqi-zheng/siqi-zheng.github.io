@@ -13,11 +13,6 @@ function renderMarkdown(md: string) {
 
   const inline = (text: string): React.ReactNode => {
     const parts: React.ReactNode[] = [];
-    // Updated Regex:
-    // m[1] = '!' (if image)
-    // m[2] = alt text or link text
-    // m[3] = url (stops at the first space)
-    // m[4] = title (optional, everything inside the quotes)
     const linkOrImageRe = /(!?)\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g;
     
     let last = 0;
@@ -27,20 +22,27 @@ function renderMarkdown(md: string) {
       if (m.index > last) parts.push(formatInline(text.slice(last, m.index)));
       
       const isImage = m[1] === "!";
-      const textOrAlt = m[2];
+      const textOrAlt = m[2]; // Your long description
       const url = m[3];
-      const title = m[4]; // This will be undefined if no title is provided
+      const title = m[4];     // "Change in Active Users by Terms"
 
       if (isImage) {
         parts.push(
-          <img 
-            key={m.index} 
-            src={url} 
-            alt={textOrAlt} 
-            title={title} // Standard HTML title attribute (shows on hover)
-            className="rounded-lg max-w-full h-auto my-4 object-cover" 
-            loading="lazy"
-          />
+          <figure key={m.index} className="my-8 flex flex-col items-center">
+            <img 
+              src={url} 
+              alt={textOrAlt} 
+              title={title}
+              className="rounded-lg max-w-full h-auto object-cover" 
+              loading="lazy"
+            />
+            {/* This makes the alt text visible as a caption below the image */}
+            {textOrAlt && (
+              <figcaption className="mt-3 text-sm text-muted-foreground text-center text-balance italic">
+                {textOrAlt}
+              </figcaption>
+            )}
+          </figure>
         );
       } else {
         parts.push(
@@ -58,6 +60,10 @@ function renderMarkdown(md: string) {
       }
       last = m.index + m[0].length;
     }
+    
+    if (last < text.length) parts.push(formatInline(text.slice(last)));
+    return parts.length === 1 ? parts[0] : <>{parts}</>;
+  };
     
     if (last < text.length) parts.push(formatInline(text.slice(last)));
     return parts.length === 1 ? parts[0] : <>{parts}</>;
