@@ -12,20 +12,53 @@ function renderMarkdown(md: string) {
   let i = 0;
 
   const inline = (text: string): React.ReactNode => {
-    // Links
     const parts: React.ReactNode[] = [];
-    const linkRe = /\[([^\]]+)\]\(([^)]+)\)/g;
+    // Updated Regex:
+    // m[1] = '!' (if image)
+    // m[2] = alt text or link text
+    // m[3] = url (stops at the first space)
+    // m[4] = title (optional, everything inside the quotes)
+    const linkOrImageRe = /(!?)\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]+)")?\)/g;
+    
     let last = 0;
     let m: RegExpExecArray | null;
-    while ((m = linkRe.exec(text)) !== null) {
+    
+    while ((m = linkOrImageRe.exec(text)) !== null) {
       if (m.index > last) parts.push(formatInline(text.slice(last, m.index)));
-      parts.push(
-        <a key={m.index} href={m[2]} target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
-          {m[1]}
-        </a>
-      );
+      
+      const isImage = m[1] === "!";
+      const textOrAlt = m[2];
+      const url = m[3];
+      const title = m[4]; // This will be undefined if no title is provided
+
+      if (isImage) {
+        parts.push(
+          <img 
+            key={m.index} 
+            src={url} 
+            alt={textOrAlt} 
+            title={title} // Standard HTML title attribute (shows on hover)
+            className="rounded-lg max-w-full h-auto my-4 object-cover" 
+            loading="lazy"
+          />
+        );
+      } else {
+        parts.push(
+          <a 
+            key={m.index} 
+            href={url} 
+            title={title}
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-primary hover:underline underline-offset-4"
+          >
+            {textOrAlt}
+          </a>
+        );
+      }
       last = m.index + m[0].length;
     }
+    
     if (last < text.length) parts.push(formatInline(text.slice(last)));
     return parts.length === 1 ? parts[0] : <>{parts}</>;
   };

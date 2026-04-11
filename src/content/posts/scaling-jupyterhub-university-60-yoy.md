@@ -9,6 +9,8 @@ featured: true
 
 Scaling an interactive computing environment for a diverse university population is no small feat. In the past 3 years, I helped drive a massive **60% year-over-year user growth** in our JupyterHub deployment. To pull this off without the system crumbling under pressure, I applied a **Platform Engineering and Site Reliability Engineering (SRE)** model. Here is exactly how treating our infrastructure like a tier-one product drove unprecedented adoption.
 
+![Compared to the time I joined ARC (Fall 2024), the number of active users almost doubled in one year.](/blog-images/jupyterhub.png "Change in Active Users by Terms")
+
 ### Proactive System Observability
 User trust plummets when systems crash silently. To keep things stable, we overhauled our observability practices by integrating default **Microsoft Cloud** tools with **Grafana** with 2i2c to create highly visible, real-time dashboards. This setup triggered *immediate alerts* the second a disk got full or a node failed. By pairing these automated alerts with weekly syncs alongside the backend team, we completely shifted from a reactive firefighting mode to proactive system maintenance. 
 
@@ -23,6 +25,8 @@ When things break, users need a lifeline. Before our upgrades, users encounterin
 
 ### Predictive Maintenance and Updates
 A major roadblock we faced was outdated R and Python kernels, which caused many modern packages and libraries to fail. However, updating a massive live system is risky. To solve this, we used **time-series Prophet models** to analyze usage logs, identifying distinct weekly traffic patterns and off-peak academic seasons. By predicting exactly when system usage would hit rock bottom, we confidently scheduled our kernel updates during these windows, keeping the system up-to-date year-round with zero disruption to end-users.
+
+![Off-peak academic seasons are clearly shown and we selected the week where user activity is at its historical lowest.](/blog-images/jupyterhub_weekly.png "Time-series Data for Weekly Usage")
 
 ### Automating Resource Cleanup
 Scaling user growth also means you have to aggressively scale your cleanup efforts. To keep the system performant and secure, we implemented **automated user offboarding**. The system now automatically revokes access and reclaims server resources the moment a student or researcher leaves the university. This simple automation prevents resource bloat, saves money, and ensures our infrastructure scales efficiently for active users.
