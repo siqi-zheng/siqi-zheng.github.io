@@ -50,17 +50,17 @@ Instead, I chose to compare models through AIC, using
 
 $$\mathrm{AIC} = 2k - 2\log L \quad (1)$$
 
-where \(k\) is the number of estimated parameters and \(L\) is the maximized likelihood. This choice was important for two reasons.
+where $k$ is the number of estimated parameters and $L$ is the maximized likelihood. This choice was important for two reasons.
 
 First, **AIC compresses model quality into a single statistic that balances fit and complexity**. It reflects both the number of parameters and the log-likelihood. In practice, that made it a more robust grading target than literal field-by-field comparison.
 
 Second, AIC aligned the grader with the actual learning objective. If a student can navigate the `lm` object structure well enough to derive or access the right quantity, then they are demonstrating the kind of statistical programming fluency the assignment is meant to test. I wanted the grader to reward that fluency rather than reward one rigid implementation path.
 
-More generally, I think of this as an invariant-design problem. Suppose two outputs \(o_1\) and \(o_2\) differ in representation but are equivalent under some task-relevant mapping \(g(\cdot)\). Then the evaluation rule should focus on
+More generally, I think of this as an invariant-design problem. Suppose two outputs $o_1$ and $o_2$ differ in representation but are equivalent under some task-relevant mapping $g(\cdot)$. Then the evaluation rule should focus on
 
 $$g(o_1) \approx g(o_2) \quad (2)$$
 
-rather than on \(o_1 = o_2\). In this project, \(g(\cdot)\) was not always AIC, but the principle stayed the same: compare objects through properties that capture meaning, not through incidental structure.
+rather than on $o_1 = o_2$. In this project, $g(\cdot)$ was not always AIC, but the principle stayed the same: compare objects through properties that capture meaning, not through incidental structure.
 
 That mindset transfers directly to ML systems. In many pipelines, exact bitwise equality is neither realistic nor useful. What matters is whether two models preserve the behavior or performance characteristic that the system actually cares about.
 
