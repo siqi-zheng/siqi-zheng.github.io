@@ -404,7 +404,8 @@ function About() {
           <a href="https://iora.nus.edu.sg/people-p/david-nott/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
             Prof. David Nott
           </a>
-          . Previously, I earned my MSc (GPA: 4.00/4.00) and HBSc in Statistics from the University of Toronto.
+          . Previously, I earned my MSc (GPA: 4.00/4.00) and HBSc in Statistics from the University of Toronto,
+          where I worked with Professor Mike Evans and Scott Schwartz on Relative Belief Framework.
           I am committed to advancing computational Bayesian Statistics, with research interests in{" "}
           <strong className="text-foreground font-medium">Bayesian Statistics</strong> and{" "}
           <strong className="text-foreground font-medium">Experimental Design</strong>.
