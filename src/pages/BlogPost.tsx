@@ -310,7 +310,38 @@ export default function BlogPost() {
                       </code>
                     );
                   },
-
+                  table: ({ children }) => (
+                    <div className="overflow-x-auto my-6">
+                      <table className="w-full text-sm border-collapse border border-border">
+                        {children}
+                      </table>
+                    </div>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="bg-muted text-foreground">
+                      {children}
+                    </thead>
+                  ),
+                  tbody: ({ children }) => (
+                    <tbody className="text-muted-foreground">
+                      {children}
+                    </tbody>
+                  ),
+                  tr: ({ children }) => (
+                    <tr className="border-b border-border">
+                      {children}
+                    </tr>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-4 py-2 text-left font-semibold border-r border-border last:border-r-0">
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-4 py-2 border-r border-border last:border-r-0">
+                      {children}
+                    </td>
+                  ),
                   a: ({ href, title, children }) => (
                     <a
                       href={href}
