@@ -1,6 +1,6 @@
 ---
 slug: "rb-inference-1"
-title: "What will a Bayesian p-value look like?"
+title: "Introducing Hypothesis Testing in Relative Belief Framework"
 date: "2026-06-04"
 summary: "Measuring statistical evidence using relative belief ratio, and the strength of evidence using posterior content."
 tags: ["Probability Theory","Relative Belief"]
@@ -86,5 +86,41 @@ Suppose you set an exclusion limit. If $S(t)$ is large when RB > 1 for $\lambda 
 | RB > 1 (in favor of $H_0$) | **Weak** evidence in favor | Strong evidence in favor |
 
 The key asymmetry is that $S(t)$ always measures *where $\lambda_0$ sits in the posterior ranking*. When you're already against $H_0$, being ranked near the bottom (small $S$) is damning. When you're already in favor of $H_0$, being ranked near the bottom (small $S$) means the posterior mass is elsewhere — your "favor" is accidental, not convincing. 
+
+## Prosecutor’s Fallacy: Against Bayes Factor
+Let $N$ be a very large population. A crime is committed by someone who is known to possess a rare trait, $X$. Let $p$ be the probability that a random person has trait $X$, where $p$ is very small.
+
+Suppose a suspect is randomly pulled from the population and found to have trait $X$. We want to evaluate the hypothesis $H_0$ that this suspect is guilty.
+
+1. **Prior Probability:** Since the suspect is drawn from a huge population $N$, the prior probability of guilt is extremely small:
+$$P(H_0) = \frac{1}{N}$$
+2. **Likelihoods:** If the suspect is guilty, they definitely have the trait. If they are innocent ($\neg H_0$), the probability they happen to have the trait is $p$.
+
+$$P(X | H_0) = 1 \quad \text{and} \quad P(X | \neg H_0) = p$$
+
+### The Bayes Factor and Relative Belief
+When we observe that the suspect has trait $X$, we compute the Bayes Factor ($BF$) and Relative Belief ratio ($RB$):
+
+- **Bayes Factor:** Measures the ratio of the likelihoods. 
+$$BF(H_0) = \frac{P(X | H_0)}{P(X | \neg H_0)} = \frac{1}{p}$$
+- **Relative Belief Ratio:** Measures the ratio of the posterior probability to the prior probability. The posterior probability $P(H_0 | X)$ is:
+
+$$P(H_0 | X) = \frac{P(X | H_0)P(H_0)}{P(X | H_0)P(H_0) + P(X | \neg H_0)P(\neg H_0)} \approx \frac{1/N}{1/N + p} \approx \frac{1}{pN}$$
+
+The Relative Belief ratio is therefore:
+
+$$RB(H_0) = \frac{P(H_0 | X)}{P(H_0)} \approx \frac{1/(pN)}{1/N} = \frac{1}{p}$$
+
+Because $p$ is very small, both $BF(H_0)$ and $RB(H_0)$ are astronomically large. In traditional interpretations of Bayes Factors (like the Jeffreys scale), a massive $BF$ is treated as "decisive evidence" that $H_0$ is true.
+
+### The Paradox and Its Resolution
+The paradox arises because declaring the suspect guilty based on a large Bayes factor is mathematically flawed. If $N = 1,000,000$ and $p = 1/10,000$, there are still $pN = 100$ people in the population with this rare trait. The suspect is just one of 100 potential matches.
+
+Michael Evans resolves this in the **Relative Belief framework** by strictly separating two concepts: 
+1. **Measure of Evidence ($RB$):** Tells you *if* your belief should increase. Here, $RB \approx 10,000$. The evidence strongly points toward guilt because your belief in the suspect's guilt increased by a factor of 10,000.
+2. **Strength of Evidence:** Evaluates if the evidence is actually strong by calculating the posterior probability of the hypothesis. Here, the strengtength is $P(H_0 | X) \approx \frac{1}{pN} = \frac{1}{100} = 0.01$.
+
+## Conclusion 
+The evidence in favor of guilt is large because finding the trait is highly anomalous for an innocent person, but the *strength* of that evidence is extraordinarily weak (1%) because the initial prior was so small. Using the Bayes Factor alone without assessing the posterior strength causes the Prosecutor's Fallacy; the Relative Belief framework forces the researcher to compute the strength metric, which correctly identifies the evidence as too weak to convict. 
 
 > Strength is essentially a **posterior p-value** or **credible rank** for $\lambda_0$, and its interpretation flips depending on which direction the evidence points.
