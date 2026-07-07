@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Mail, Github, Linkedin, Twitter, ExternalLink, FileText, ChevronDown, MapPin, GraduationCap, Download } from "lucide-react";
 import FeaturedArticles from "@/components/FeaturedArticles";
 import BackToTop from "@/components/BackToTop";
-
+import { PublicationCard } from "@/components/PublicationCard";
+import { parseBibtex, groupByYear, type BibEntry } from "@/lib/parseBibtex";
 const AVATAR_URL = `${import.meta.env.BASE_URL}avatar.jpg`;
 const CV_URL = `${import.meta.env.BASE_URL}Siqi_Zheng_CV.pdf`;
 
@@ -18,13 +19,18 @@ const NAV_ITEMS = [
 ];
 
 const SKILLS = [
-  { category: "Research", items: ["Bayesian Statistics", "Experimental Design", "Computational Statistics", "Reproducibility"] },
-  { category: "Programming", items: ["R", "Python", "SQL", "JavaScript"] },
-  { category: "Tools & Platforms", items: ["JupyterHub", "REDCap", "Git/GitHub", "Generative AI"] },
+  { category: "Research", items: ["Bayesian Statistics", "In-context Learning", "Machine Learning", "Reproducibility"] },
+  { category: "Programming", items: ["R", "Python", "SQL", "JavaScript", "Bash"] },
+  { category: "Tools & Platforms", items: ["JupyterHub", "REDCap", "Git/GitHub", "Hydra"] },
   { category: "Teaching", items: ["Course Instruction", "Curriculum Design", "Auto-Grading Systems"] },
 ];
 
 const EXPERIENCES = [
+  {
+    period: "2026 - Present",
+    title: "PhD Student",
+    org: "Dept. of Statistics & Data Science, National University of Singapore",
+    description: "Supervisor: David Nott"  },
   {
     period: "2025",
     title: "Sessional Instructor",
@@ -32,19 +38,19 @@ const EXPERIENCES = [
     description: "Instructor for Statistical Theory (STA255), a core undergraduate course for statistics minors with ~50 students; delivered 6 hours of lectures per week over a 6-week term.",
   },
   {
-    period: "2022 – 2025",
+    period: "2022 - 2025",
     title: "Business Systems Analyst",
     org: "Academic, Research & Collaborative (ARC), University of Toronto",
     description: "Administered UofT JupyterHub (10K+ users) and REDCap survey platform (3K+ users), supporting scientific computation and research data collection for 50+ departments. Led the AI Virtual Tutors Pilot Project, deploying Generative AI chatbots across 6 courses.",
   },
   {
-    period: "2023 – 2025",
+    period: "2023 - 2025",
     title: "Software Developer (Part-time)",
     org: "Dept. of Statistical Sciences, University of Toronto",
     description: "Developed and maintained RMarkUs, an open-source R package for automated grading of R assignments across 5 courses with class sizes up to 500 students.",
   },
   {
-    period: "2020 – 2024",
+    period: "2020 - 2024",
     title: "Teaching Assistant (Part-time)",
     org: "Dept. of Statistical Sciences, University of Toronto",
     description: "TA for multiple undergraduate and graduate statistics courses, supporting instruction and student learning.",
@@ -53,7 +59,7 @@ const EXPERIENCES = [
 
 const PROJECTS = [
   {
-    title: "RMarkUs",
+    title: "Auto-grading with RMarkUs",
     description: (
       <>
         Developed an open-source automated grading R package to evaluate complex technical assignments, including Statistical Models and Visualizations. Used by five undergraduate courses (300 students/class) during the past three years at UofT, eliminating over{" "}
@@ -136,10 +142,15 @@ function Nav() {
       }`}
     >
       <div className="max-w-4xl mx-auto px-6 flex items-center justify-between h-14">
-        <a href="#" className="text-[2rem] md:text-[2rem] lg:text-[2rem] font-semibold tracking-tight text-foreground text-lg" style={{ fontFamily: "var(--font-serif)" }}>
-          Siqi Zheng
-        </a>
-        <ul className="hidden md:flex gap-6 text-sm">
+        <a
+  href="#"
+  className="text-[2.2rem] md:text-[2.3rem] lg:text-[2.4rem] font-semibold tracking-tight text-primary"
+  style={{ fontFamily: "var(--font-cg)" }}
+>
+  Siqi Zheng
+</a>
+
+<ul className="hidden md:flex gap-6 text-lg">
           {NAV_ITEMS.map((n) => (
             <li key={n.href}>
               <a href={n.href} className="text-muted-foreground hover:text-foreground transition-colors duration-200">
@@ -249,122 +260,97 @@ function Nav() {
 //   );
 // }
 function Hero() {
-  return (
+  const socialLinks = [
+    { href: "https://github.com/siqi-zheng", icon: Github, label: "GitHub" },
+    { href: "https://www.linkedin.com/in/siqi-zheng-nus/", icon: Linkedin, label: "LinkedIn" },
+    { href: "https://x.com/SiqiiiTim", icon: Twitter, label: "X / Twitter" },
+    ];  
+    return (
+    
     <section className="min-h-screen flex items-center pt-14">
       <div className="max-w-6xl mx-auto px-6 w-full py-16 md:py-24">
         
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 lg:gap-16">
-          
-          {/* Left Column: Profile Image & Social Icons */}
-          <div className="flex flex-col items-center md:items-end w-full max-w-[340px] md:max-w-[380px] shrink-0 gap-6 mt-6 md:mt-0">
-            <RevealSection className="w-full flex justify-center md:justify-end">
-              <img
-                src={AVATAR_URL}
-                alt="Siqi Zheng, PhD student at the National University of Singapore"
-                className="w-full h-auto rounded-2xl object-cover shadow-lg shadow-foreground/5 ring-1 ring-border"
-                loading="eager"
-              />
-            </RevealSection>
+        {/* <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 lg:gap-16"> */}
+<div className="flex flex-col md:flex-row items-center md:items-stretch justify-center gap-8 md:gap-10 lg:gap-16">          {/* Left Column: Profile Image & Social Icons */}
+          <div className="flex flex-col items-center md:items-end w-full max-w-[340px] md:max-w-[380px] shrink-0 gap-6 mt-6 md:mt-0 md:self-stretch">
+  <RevealSection className="w-full md:h-full flex justify-center md:justify-end">
+    <img
+      src={AVATAR_URL}
+      alt="Siqi Zheng, PhD student at the National University of Singapore"
+      className="w-full md:h-full rounded-2xl object-cover shadow-lg shadow-foreground/5 ring-1 ring-border"
+      loading="eager"
+    />
+  </RevealSection>
+</div>
 
-            {/* Social Icons - Moved under the avatar for better visual balance 
-            <RevealSection delay={400} className="w-full flex justify-center md:justify-center">*/}
-            <RevealSection delay={400} className="hidden md:flex w-full justify-center md:justify-center">
-              <div className="flex gap-4">
-                {[
-                  { href: "https://github.com/siqi-zheng", icon: Github, label: "GitHub" },
-                  { href: "https://www.linkedin.com/in/siqi-zheng-nus/", icon: Linkedin, label: "LinkedIn" },
-                  { href: "https://x.com/SiqiiiTim", icon: Twitter, label: "X / Twitter" },
-                ].map(({ href, icon: Icon, label }) => (
-                  <a
-                    key={href}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="p-2 rounded-md text-muted-foreground hover:text-[#021A40] hover:bg-secondary active:scale-95 transition-all duration-200"
-                  >
-                    <Icon className="w-6 h-6" />
-                  </a>
-                ))}
-              </div>
-            </RevealSection>
-          </div>
-
-          {/* Right Column: Industrial-Oriented Academic Text & Action Buttons */}
-          <div className="text-center md:text-left">
+          {/* Right Column: Clear academic hero text */}
+          <div className="text-center md:text-left max-w-xl h-full flex flex-col justify-between">
             <RevealSection delay={100}>
-              <h1 
-              className="font-['Cormorant Garamond'] text-[2.8rem] md:text-[3.5rem] 
-              lg:text-[4.2rem] font-semibold tracking-tight leading-[1.05] text-[#021A40] mb-6"
-              style={{ fontFamily: 'var(--font-cg), serif' }}>
-              Scalable MLOps &<br />
-              <span className="text-[#3061A3] italic">Math-Driven Computing</span>
-            </h1>
+              <p className="text-sm md:text-base uppercase tracking-[0.18em] text-slate-500 mb-3">
+                Probabilistic Machine Learning · Foundational Model · Open-Source Software
+              </p>
             </RevealSection>
 
-            <RevealSection delay={200}>
-              <p className="mt-3 text-lg md:text-xl text-gray-700 leading-relaxed mb-8 max-w-lg mx-auto md:mx-0 text-justify hyphens-auto">
-              I am a PhD Researcher at NUS. 
-              My work centers on architecting <strong>production-grade, container-ready</strong> pipelines 
-              for decision-making framework under uncertainty. 
-              Beyond research, I am a dedicated advocate for <em>Open Science</em>, 
-              having developed open-source software integrated into international university curricula 
-              and scaled university-wide computing infrastructure to support 10K+ users. My goal is to ensure that advanced ML systems 
-              remain <strong>transparent, scalable, and mathematically rigorous</strong>.
-       
-              </p>       
-              </RevealSection>
-
-            <RevealSection delay={300}>
-              <div className="mt-6 flex flex-wrap items-center gap-4 justify-center md:justify-start">
-                <a 
-                  href="#projects" 
-                  className="inline-flex items-center gap-2 bg-[#021A40] text-white text-sm font-bold tracking-widest uppercase px-6 py-3 rounded-lg hover:bg-blue-900 transition-all duration-200 shadow-md active:scale-[0.97]"
-                >
-                  View Projects
-                  <span className="text-lg leading-none">&rarr;</span>
-                </a>
-                
-                <a
-                  href="mailto:timothyzheng2000@gmail.com"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 active:scale-[0.97] transition-all duration-200 shadow-sm"
-                >
-                  <Mail className="w-4 h-4" /> Get in Touch
-                </a>
-
-                <a
-                  href={CV_URL}
-                  download
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-border text-sm font-medium text-foreground hover:bg-secondary active:scale-[0.97] transition-all duration-200"
-                >
-                  <Download className="w-4 h-4" /> Download CV
-                </a>
-              </div>
+            <RevealSection delay={150}>
+              <h1
+                className="text-[2rem] md:text-[2.5rem] lg:text-[3rem] font-normal tracking-tight leading-[1.08] text-muted-foreground mb-5"
+                style={{ fontFamily: "var(--font-lora), serif" }}
+              >
+                PhD Student in Statistics & Data Science
+              </h1>
+              <h2
+                className="text-[1rem] md:text-[1.25rem] lg:text-[1.5rem] font-normal tracking-tight leading-[1.08] text-secondary-foreground mb-5"
+                style={{ fontFamily: "var(--font-lora), serif" }}
+              >
+                National University of Singapore
+              </h2>
             </RevealSection>
+
+            <RevealSection delay={250}>
+              <p className="text-lg md:text-[1.35rem] text-slate-700 leading-relaxed max-w-2xl mx-auto md:mx-0 mb-8">
+                Advancing Bayesian inference with deep learning models and in-context learning for tabular data.
+              </p>
+            </RevealSection>
+
+<RevealSection delay={350}>
+  <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-5 justify-center md:justify-start">
+    {/* Buttons */}
+    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+      <a
+        href="#about"
+        className="inline-flex items-center justify-center rounded-md bg-[#021A40] px-6 py-3 text-white font-medium hover:bg-[#16325c] transition-colors duration-200"
+      >
+        About Me
+      </a>
+      <a
+        href="#projects"
+        className="inline-flex items-center justify-center rounded-md border border-slate-300 px-6 py-3 text-[#021A40] font-medium hover:bg-slate-50 transition-colors duration-200"
+      >
+        View Research
+      </a>
+    </div>
+
+    {/* Social Icons */}
+    <div className="flex flex-nowrap items-center justify-center md:justify-start gap-3">
+      {socialLinks.map(({ href, icon: Icon, label }) => (
+        <a
+          key={href}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          title={label}
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm hover:border-[#021A40] hover:text-[#021A40] hover:shadow-md active:scale-95 transition-all duration-200"
+        >
+          <Icon className="w-5 h-5" />
+        </a>
+      ))}
+    </div>
+  </div>
+</RevealSection>
+          
+          
           </div>
-            
-
-            {/* Social Icons - mobile only, below Download CV */}
-            <RevealSection delay={350} className="flex md:hidden justify-center w-full mt-2">
-              <div className="flex gap-4">
-                {[
-                  { href: "https://github.com/siqi-zheng", icon: Github, label: "GitHub" },
-                  { href: "https://www.linkedin.com/in/siqi-zheng-nus/", icon: Linkedin, label: "LinkedIn" },
-                  { href: "https://x.com/SiqiiiTim", icon: Twitter, label: "X / Twitter" },
-                ].map(({ href, icon: Icon, label }) => (
-                  <a
-                    key={href}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="p-2 rounded-md text-muted-foreground hover:text-[#021A40] hover:bg-secondary active:scale-95 transition-all duration-200"
-                  >
-                    <Icon className="w-6 h-6" />
-                  </a>
-                ))}
-              </div>
-            </RevealSection>
         </div>
 
         {/* Bouncing Scroll Indicator */}
@@ -398,43 +384,48 @@ function Section({ id, title, children, className = "" }: { id: string; title: s
 function About() {
   return (
     <Section id="about" title="About">
-      <RevealSection>
-        <p className="text-base md:text-lg leading-relaxed text-muted-foreground max-w-prose text-justify hyphens-auto">
-          I am a first-year PhD student at the National University of Singapore, supervised by{" "}
-          <a href="https://iora.nus.edu.sg/people-p/david-nott/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
+      <div className="max-w-prose space-y-5 md:space-y-6">
+        <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-left hyphens-auto">
+          I am a first-year PhD student in Statistics and Data Science at the National University of Singapore, supervised by{" "}
+          <a
+            href="https://blog.nus.edu.sg/davidnott/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline underline-offset-4"
+          >
             Prof. David Nott
           </a>
-          . Previously, I earned my MSc (GPA: 4.00/4.00) and HBSc in Statistics from the University of Toronto,
-          where I worked with Professor Mike Evans and Scott Schwartz on Relative Belief Framework.
-          I am committed to advancing computational Bayesian Statistics, with research interests in{" "}
-          <strong className="text-foreground font-medium">Bayesian Statistics</strong> and{" "}
-          <strong className="text-foreground font-medium">Experimental Design</strong>.
+. My research focuses on advancing Bayesian inference for modern learning systems, with interests spanning deep learning-based Bayesian methods, in-context learning for tabular data, simulation-based inference, and the Relative Belief Framework.
         </p>
-      </RevealSection>
-      <RevealSection delay={100}>
-        <p className="mt-4 text-base md:text-lg leading-relaxed text-muted-foreground max-w-prose text-justify hyphens-auto">
-My core research focuses on simulation-based Bayesian inference, where I optimize production-ready pipelines for the Bayesian Relative Belief Framework. <strong>My passion for statistical education spans 
-  from mentoring as an undergraduate TA to delivering core theory lectures as a Sessional Instructor 
-  at the University of Toronto.</strong> Dedicated to empowering students at scale, 
-  I designed an <a href="https://github.com/RAutoGrading/RMarkUs" rel="noopener noreferrer" 
-  className="text-primary hover:underline underline-offset-4">R package</a> that 
-  automates grading for <strong>2K+ students</strong> and led an AI Virtual Tutors 
-  pilot deploying GenAI chatbots across 6 university courses. To further support the 
-  scientific community, I drove <strong>60% YoY user growth</strong> across enterprise 
-  computing platforms—including <a href="https://datatools.utoronto.ca/" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub and REDCap</a>—serving <strong>1.7K+ active users</strong> at the university.          {/* At the University of Toronto, I served as a business analyst at{" "}
-          <a href="https://act.utoronto.ca/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">ARC</a>,
-          administering JupyterHub and REDCap. I led a group at{" "}
-          <a href="https://www.statistics.utoronto.ca/past-datafest-at-UofT#past-datafest-accordion-3" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">
-            DataFest@UofT 2022
-          </a>{" "}
-          and won the <em>Best Statistical Analysis Award</em>. */}
+
+        <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-left hyphens-auto">
+          Previously, I completed my MSc and HBSc in Statistics at the University of Toronto, where I worked with Professor Mike Evans and Scott Schwartz on the {" "}
+          <a
+            href="https://github.com/siqi-zheng/rbinfer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline underline-offset-4"
+          >application of probabilistic programming in Relative Belief Inference</a>.
         </p>
-      </RevealSection>
-      <RevealSection delay={200}>
-        <p className="mt-6 text-sm font-medium text-accent bg-accent/10 inline-flex items-center gap-2 px-4 py-2 rounded-lg">
-          🔍 Currently on the job market — seeking an internship position.
+
+        <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-left hyphens-auto">
+          Beyond research, I have taught statistics at UofT, built {" "}
+          <a
+            href="#projects"
+            className="text-primary hover:underline underline-offset-4"
+          >
+          automatic grading tools for large-scale statistical education
+          </a>
+          , and managed research computing infrastructure, including work related to{" "}
+          <a
+            href="#projects"
+            className="text-primary hover:underline underline-offset-4"
+          >
+            JupyterHub and REDCap
+          </a>
+          .
         </p>
-      </RevealSection>
+      </div>
     </Section>
   );
 }
@@ -554,33 +545,67 @@ export function ProjectsSection() {
 
 
 
+// function PublicationsSection() {
+//   return (
+//     <Section id="publications" title="Publications">
+//       <RevealSection>
+//         <div className="p-6 rounded-xl border border-border bg-card">
+//           <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase">2022</p>
+//           <h3 className="text-lg font-semibold text-foreground mt-1" style={{ fontFamily: "var(--font-serif)" }}>
+//             A Comparison of Reproducibility Guidelines and Its Implications on Undergraduate Statistical Education
+//           </h3>
+//           <p className="text-sm text-foreground mt-1">Siqi Zheng</p>
+//           <p className="text-sm text-accent mt-1 italic">
+//             Best Undergraduate Oral Presentation — The Tenth Annual Canadian Statistics Student Conference (CSSC)
+//           </p>
+//           <div className="mt-4 flex gap-3">
+//             <a href="https://arxiv.org/abs/2210.16350" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4">
+//               <FileText className="w-3.5 h-3.5" /> arXiv
+//             </a>
+//             <a href="https://github.com/siqi-zheng/SSC_Reproducibility_Presentation" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4">
+//               <ExternalLink className="w-3.5 h-3.5" /> Presentation
+//             </a>
+//           </div>
+//         </div>
+//       </RevealSection>
+//     </Section>
+//   );
+// }
 function PublicationsSection() {
+  const [byYear, setByYear] = useState<Map<string, BibEntry[]>>(new Map());
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}publications.bib`)
+      .then((r) => r.text())
+      .then((raw) => {
+        setByYear(groupByYear(parseBibtex(raw)));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
   return (
     <Section id="publications" title="Publications">
-      <RevealSection>
-        <div className="p-6 rounded-xl border border-border bg-card">
-          <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase">2022</p>
-          <h3 className="text-lg font-semibold text-foreground mt-1" style={{ fontFamily: "var(--font-serif)" }}>
-            A Comparison of Reproducibility Guidelines and Its Implications on Undergraduate Statistical Education
-          </h3>
-          <p className="text-sm text-foreground mt-1">Siqi Zheng</p>
-          <p className="text-sm text-accent mt-1 italic">
-            Best Undergraduate Oral Presentation — The Tenth Annual Canadian Statistics Student Conference (CSSC)
-          </p>
-          <div className="mt-4 flex gap-3">
-            <a href="https://arxiv.org/abs/2210.16350" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4">
-              <FileText className="w-3.5 h-3.5" /> arXiv
-            </a>
-            <a href="https://github.com/siqi-zheng/SSC_Reproducibility_Presentation" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4">
-              <ExternalLink className="w-3.5 h-3.5" /> Presentation
-            </a>
+      {loading ? (
+        <p className="text-sm text-muted-foreground">Loading…</p>
+      ) : (
+        [...byYear.entries()].map(([year, pubs]) => (
+          <div key={year} className="space-y-4 mb-8">
+            <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
+              {year}
+            </p>
+            {pubs.map((entry) => (
+              <RevealSection key={entry.id}>
+                <PublicationCard entry={entry} />
+              </RevealSection>
+            ))}
           </div>
-        </div>
-      </RevealSection>
+        ))
+      )}
     </Section>
   );
 }
-
 function ContactSection() {
   return (
     <Section id="contact" title="Contact" className="bg-card">
