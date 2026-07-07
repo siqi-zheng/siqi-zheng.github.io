@@ -14,6 +14,7 @@ export interface BibEntry {
   url?: string;
   presentation?: string;
   eprint?: string;
+  codes?: string;
 }
 
 /**
@@ -58,6 +59,7 @@ export function parseBibtex(raw: string): BibEntry[] {
       url:          fields.url,
       presentation: fields.presentation,
       eprint:       fields.eprint,
+      codes:        fields.codes,
     });
   }
 

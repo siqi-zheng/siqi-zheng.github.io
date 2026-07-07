@@ -1,5 +1,5 @@
 // components/PublicationCard.tsx
-import { FileText, ExternalLink, BookOpen, Link2 } from "lucide-react";
+import { FileText, ExternalLink, BookOpen, Link2, Code2 } from "lucide-react";
 import { BibEntry } from "@/lib/parseBibtex";
 
 export function PublicationCard({ entry }: { entry: BibEntry }) {
@@ -50,6 +50,16 @@ export function PublicationCard({ entry }: { entry: BibEntry }) {
             className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4"
           >
             <BookOpen className="w-3.5 h-3.5" /> DOI
+          </a>
+        )}
+        {entry.codes && (
+          <a
+            href={entry.codes}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4"
+          >
+            <Code2 className="w-3.5 h-3.5" /> Code
           </a>
         )}
         {entry.presentation && (

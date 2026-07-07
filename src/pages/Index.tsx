@@ -30,7 +30,8 @@ const EXPERIENCES = [
     period: "2026 - Present",
     title: "PhD Student",
     org: "Dept. of Statistics & Data Science, National University of Singapore",
-    description: "Supervisor: David Nott"  },
+    description: "Supervisor: David Nott"
+  },
   {
     period: "2025",
     title: "Sessional Instructor",
@@ -62,32 +63,34 @@ const PROJECTS = [
     title: "Auto-grading with RMarkUs",
     description: (
       <>
-        Developed an open-source automated grading R package to evaluate complex technical assignments, including Statistical Models and Visualizations. Used by five undergraduate courses (300 students/class) during the past three years at UofT, eliminating over{" "}
-        <TooltipText 
-          text={<strong>750 hours</strong>}  
-          tooltip={"300 students × 5 courses × 10 assignments × ~15 mins manual grading time - 5 courses × 10 assignments × 60 minutes testing & deployment = ~750 hours saved per year."} 
+        Built an open-source R package for automated grading of complex technical assignments, including statistical models and visualizations. Adopted by five undergraduate courses at UofT in three years, saving over {" "}
+        <TooltipText
+          text={<strong>750 hours</strong>}
+          tooltip={"300 students × 5 courses × 10 assignments × ~15 mins manual grading time - 5 courses × 10 assignments × 60 minutes testing & deployment = ~750 hours saved per year."}
         />{" "}
         of manual grading time per year.
       </>
     ),
     link: "https://github.com/RAutoGrading/RMarkUs",
     tags: ["R", "Open Source", "Education"],
+    id: "autograde",
   },
   {
     title: "AI Virtual Tutors Pilot",
     description: "Led the deployment of Generative AI chatbots across 6 university courses (60–200 students each), exploring AI-assisted learning at scale.",
     tags: ["Generative AI", "EdTech", "Leadership"],
+    id: "ai-tutor",
   },
   {
     title: "Scientific Computational Systems Management",
     description: (
       <>
-       Managed two platforms at UofT, <a href="/blog/scaling-jupyterhub-university-60-yoy" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub</a> and <a href="/blog/strategic-redcap-management-university" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">REDCap</a>, a 
-       on-premise survey collection tool for researchers. Drove <strong>60% YoY user growth</strong> across enterprise computing platforms—<strong>17K+ active users</strong> at the university. 
+        Scaled two platforms at UofT-<a href="/blog/scaling-jupyterhub-university-60-yoy" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">JupyterHub</a> and <a href="/blog/strategic-redcap-management-university" rel="noopener noreferrer" className="text-primary hover:underline underline-offset-4">REDCap</a> (an on-premise survey tool for researchers)-to 17K+ active users across 3 campuses, driving 60% YoY growth through a streamlined application process and cross-departmental collaboration.
       </>
     ),
     link: "https://datatools.utoronto.ca",
     tags: ["R", "Python", "Education"],
+    id: "datatools",
   },
 ];
 
@@ -137,20 +140,19 @@ function Nav() {
   }, []);
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/90 backdrop-blur-md shadow-sm" : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-background/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+        }`}
     >
       <div className="max-w-4xl mx-auto px-6 flex items-center justify-between h-14">
         <a
-  href="#"
-  className="text-[2.2rem] md:text-[2.3rem] lg:text-[2.4rem] font-semibold tracking-tight text-primary"
-  style={{ fontFamily: "var(--font-cg)" }}
->
-  Siqi Zheng
-</a>
+          href="#"
+          className="text-[2.2rem] md:text-[2.3rem] lg:text-[2.4rem] font-semibold tracking-tight text-primary"
+          style={{ fontFamily: "var(--font-cg)" }}
+        >
+          Siqi Zheng
+        </a>
 
-<ul className="hidden md:flex gap-6 text-lg">
+        <ul className="hidden md:flex gap-6 text-lg">
           {NAV_ITEMS.map((n) => (
             <li key={n.href}>
               <a href={n.href} className="text-muted-foreground hover:text-foreground transition-colors duration-200">
@@ -255,7 +257,7 @@ function Nav() {
 //           </a>
 //         </div>
 //       </div>
-      
+
 //     </section>
 //   );
 // }
@@ -264,24 +266,24 @@ function Hero() {
     { href: "https://github.com/siqi-zheng", icon: Github, label: "GitHub" },
     { href: "https://www.linkedin.com/in/siqi-zheng-nus/", icon: Linkedin, label: "LinkedIn" },
     { href: "https://x.com/SiqiiiTim", icon: Twitter, label: "X / Twitter" },
-    ];  
-    return (
-    
+  ];
+  return (
+
     <section className="min-h-screen flex items-center pt-14">
       <div className="max-w-6xl mx-auto px-6 w-full py-16 md:py-24">
-        
+
         {/* <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-10 lg:gap-16"> */}
-<div className="flex flex-col md:flex-row items-center md:items-stretch justify-center gap-8 md:gap-10 lg:gap-16">          {/* Left Column: Profile Image & Social Icons */}
+        <div className="flex flex-col md:flex-row items-center md:items-stretch justify-center gap-8 md:gap-10 lg:gap-16">          {/* Left Column: Profile Image & Social Icons */}
           <div className="flex flex-col items-center md:items-end w-full max-w-[340px] md:max-w-[380px] shrink-0 gap-6 mt-6 md:mt-0 md:self-stretch">
-  <RevealSection className="w-full md:h-full flex justify-center md:justify-end">
-    <img
-      src={AVATAR_URL}
-      alt="Siqi Zheng, PhD student at the National University of Singapore"
-      className="w-full md:h-full rounded-2xl object-cover shadow-lg shadow-foreground/5 ring-1 ring-border"
-      loading="eager"
-    />
-  </RevealSection>
-</div>
+            <RevealSection className="w-full md:h-full flex justify-center md:justify-end">
+              <img
+                src={AVATAR_URL}
+                alt="Siqi Zheng, PhD student at the National University of Singapore"
+                className="w-full md:h-full rounded-2xl object-cover shadow-lg shadow-foreground/5 ring-1 ring-border"
+                loading="eager"
+              />
+            </RevealSection>
+          </div>
 
           {/* Right Column: Clear academic hero text */}
           <div className="text-center md:text-left max-w-xl h-full flex flex-col justify-between">
@@ -312,44 +314,44 @@ function Hero() {
               </p>
             </RevealSection>
 
-<RevealSection delay={350}>
-  <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-5 justify-center md:justify-start">
-    {/* Buttons */}
-    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-      <a
-        href="#about"
-        className="inline-flex items-center justify-center rounded-md bg-[#021A40] px-6 py-3 text-white font-medium hover:bg-[#16325c] transition-colors duration-200"
-      >
-        About Me
-      </a>
-      <a
-        href="#projects"
-        className="inline-flex items-center justify-center rounded-md border border-slate-300 px-6 py-3 text-[#021A40] font-medium hover:bg-slate-50 transition-colors duration-200"
-      >
-        View Research
-      </a>
-    </div>
+            <RevealSection delay={350}>
+              <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-5 justify-center md:justify-start">
+                {/* Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                  <a
+                    href="#about"
+                    className="inline-flex items-center justify-center rounded-md bg-[#021A40] px-6 py-3 text-white font-medium hover:bg-[#16325c] transition-colors duration-200"
+                  >
+                    About Me
+                  </a>
+                  <a
+                    href="#projects"
+                    className="inline-flex items-center justify-center rounded-md border border-slate-300 px-6 py-3 text-[#021A40] font-medium hover:bg-slate-50 transition-colors duration-200"
+                  >
+                    View Research
+                  </a>
+                </div>
 
-    {/* Social Icons */}
-    <div className="flex flex-nowrap items-center justify-center md:justify-start gap-3">
-      {socialLinks.map(({ href, icon: Icon, label }) => (
-        <a
-          key={href}
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={label}
-          title={label}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm hover:border-[#021A40] hover:text-[#021A40] hover:shadow-md active:scale-95 transition-all duration-200"
-        >
-          <Icon className="w-5 h-5" />
-        </a>
-      ))}
-    </div>
-  </div>
-</RevealSection>
-          
-          
+                {/* Social Icons */}
+                <div className="flex flex-nowrap items-center justify-center md:justify-start gap-3">
+                  {socialLinks.map(({ href, icon: Icon, label }) => (
+                    <a
+                      key={href}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      title={label}
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 shadow-sm hover:border-[#021A40] hover:text-[#021A40] hover:shadow-md active:scale-95 transition-all duration-200"
+                    >
+                      <Icon className="w-5 h-5" />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </RevealSection>
+
+
           </div>
         </div>
 
@@ -395,7 +397,7 @@ function About() {
           >
             Prof. David Nott
           </a>
-. My research focuses on advancing Bayesian inference for modern learning systems, with interests spanning deep learning-based Bayesian methods, in-context learning for tabular data, simulation-based inference, and the Relative Belief Framework.
+          . My research focuses on advancing Bayesian inference for modern learning systems, with interests spanning deep learning-based Bayesian methods, in-context learning for tabular data, simulation-based inference, and the Relative Belief Framework.
         </p>
 
         <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-left hyphens-auto">
@@ -409,16 +411,22 @@ function About() {
         </p>
 
         <p className="text-base md:text-lg leading-relaxed text-muted-foreground text-left hyphens-auto">
-          Beyond research, I have taught statistics at UofT, built {" "}
+          Beyond research, I have  {" "}
           <a
-            href="#projects"
+            href="/blog/teaching-stats"
             className="text-primary hover:underline underline-offset-4"
           >
-          automatic grading tools for large-scale statistical education
+            taught statistics at UofT
+          </a>, built {" "}
+          <a
+            href="#project-autograde"
+            className="text-primary hover:underline underline-offset-4"
+          >
+            automatic grading tools for large-scale statistical education
           </a>
           , and managed research computing infrastructure, including work related to{" "}
           <a
-            href="#projects"
+            href="#project-datatools"
             className="text-primary hover:underline underline-offset-4"
           >
             JupyterHub and REDCap
@@ -504,14 +512,17 @@ export function ProjectsSection() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {PROJECTS.map((proj, i) => (
           <RevealSection key={proj.title} delay={i * 100}>
-            <div className="p-6 rounded-xl bg-background border border-border shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col">
-              <h3 
-                className="text-lg font-semibold text-foreground" 
+            <article
+              id={`project-${proj.id}`}
+              className="scroll-mt-24 p-6 rounded-xl bg-background border border-border shadow-sm hover:shadow-md transition-shadow duration-300 h-full flex flex-col"
+            >
+              <h3
+                className="text-lg font-semibold text-foreground"
                 style={{ fontFamily: "var(--font-serif)" }}
               >
                 {proj.title}
               </h3>
-              
+
               {/* 2. Render description natively so our React Component works */}
               <p className="text-sm text-muted-foreground mt-2 leading-relaxed flex-1 text-pretty">
                 {proj.description}
@@ -524,18 +535,18 @@ export function ProjectsSection() {
                   </span>
                 ))}
               </div>
-              
+
               {proj.link && (
-                <a 
-                  href={proj.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={proj.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="mt-4 inline-flex items-center gap-1.5 text-sm text-primary hover:underline underline-offset-4"
                 >
                   View on GitHub <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               )}
-            </div>
+            </article>
           </RevealSection>
         ))}
       </div>
